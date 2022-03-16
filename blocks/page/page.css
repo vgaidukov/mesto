@@ -1,12 +1,10 @@
 .page {
     margin: 0 auto;
-    padding: 45px 200px 60px;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    max-width: 1280px;
+    max-width: 880px;
     background-color: #000;
-    box-sizing: border-box;
 
     font-family: 'Inter', 'Arial', sans-serif;
     font-weight: 400;
@@ -14,14 +12,14 @@
     color: #FFFFFF;
 }
 
-@media screen and (max-width: 991.98px) {
+@media screen and (max-width: 1023.98px) {
     .page {
-        padding: 28px 24px 0;
+        padding: 0 50px;
     }
 }
 
 @media screen and (max-width: 767.98px) {
     .page {
-        padding: 16px 16px 0;
+        padding: 0;
     }
 }

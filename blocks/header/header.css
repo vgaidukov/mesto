@@ -1,4 +1,21 @@
 .header {
+    width: 100%;
     border-bottom: 1px solid #545454;
     min-height: 74px;
+    margin-top: 45px;
+}
+
+@media screen and (max-width: 767.98px) {
+    .header {
+        min-height: 56px;
+        margin-top: 28px;
+    }
+}
+
+@media screen and (max-width: 767.98px) {
+    .header__logo {
+        width: 103.74px;
+        height: 24.4px;
+        margin-left: 27px;
+    }
 }
