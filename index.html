@@ -8,18 +8,32 @@
     <meta name="keywords" content="html, css, JavaScipt">
     <meta name="author" content="Вадим Гайдуков">
     <link rel="stylesheet" href="./pages/index.css">
-    <title>Путешествия по России</title>
+    <title>Mesto</title>
 </head>
 <body>
-    <div class="page">
-        <header class="header">
-            <img class="header__logo" src="./images/header-logo.svg" alt="лого место">
-        </header>
-        <main class="main">
-        </main>
-        <footer class="footer">
-                <div class="footer__copyright">&copy; 2022 Mesto Russia</div>
-        </footer>
+    <div class="color-filling">
+        <div class="page">
+            <header class="header">
+                <img class="header__logo" src="./images/header-logo.svg" alt="Лого Место">
+            </header>
+            <main class="main">
+                <section class="profile">
+                    <div class="profile__main">
+                        <img src="./images/avatar.png" alt="Аватар" class="profile__avatar">
+                        <div class="profile__info">
+                            <h1 class="profile__name">Жак-Ив Кусто
+                                <button class="profile__edit-button button"></button>
+                            </h1>
+                            <p class="profile__description">Исследователь океана</p>
+                        </div>
+                    </div>
+                    <button class="profile__add-button button"></button>
+                </section>
+            </main>
+            <footer class="footer">
+                    <div class="footer__copyright">&copy; 2022 Mesto Russia</div>
+            </footer>
+        </div>
     </div>
 </body>
 </html>

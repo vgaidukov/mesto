@@ -1,0 +1,59 @@
+.profile {
+    margin: 40px 0 50px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile__main {
+    display: flex;
+
+}
+
+.profile__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.profile__avatar {
+    margin-right: 30px;
+    height: 120px;
+}
+
+.profile__name {
+    display: flex;
+    align-items: center;
+
+    font-weight: 500;
+    font-size: 42px;
+    line-height: 1.14;
+}
+.profile__description {
+    margin-top: 5px;
+
+    font-size: 18px;
+    line-height: 22px;
+}
+.profile__edit-button {
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: 1px solid white;
+    outline: none;
+    background-image: url('../../images/edit-button-img.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 18px;
+
+}
+.profile__add-button {
+    width: 150px;
+    height: 50px;
+    outline: none; /* Для синий ободки */
+    border: 1px solid white;
+    background: transparent;
+    background-image: url('../../images/add-button-img.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}

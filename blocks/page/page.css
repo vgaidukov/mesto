@@ -1,9 +1,10 @@
 .page {
+    margin: 0 auto;
+    padding: 45px 200px 60px;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    max-width: 100vw;
-    padding: 45px 200px 60px;
+    max-width: 1280px;
     background-color: #000;
     box-sizing: border-box;
 
