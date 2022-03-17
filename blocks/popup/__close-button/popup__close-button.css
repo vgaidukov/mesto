@@ -1,0 +1,35 @@
+.popup__close-button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    position: absolute;
+    top: calc(-32px - 8px);
+    right: calc(-32px - 8px);
+}
+
+.popup__close-button::before {
+    position: absolute;
+    top: 0;
+    content: '';
+    height: 35px;
+    background-color: #fff;
+    border: 1px solid #fff;
+    transform: rotate(45deg);
+}
+
+.popup__close-button::after {
+    position: absolute;
+    top: 0;
+    content: '';
+    height: 35px;
+    background-color: #fff;
+    border: 1px solid #fff;
+    transform: rotate(-45deg);
+}
+
+@media screen and (max-width: 661.98px) {
+    .popup__close-button {
+        top: calc(-32px - 16px);
+        right: 0;
+    }
+}

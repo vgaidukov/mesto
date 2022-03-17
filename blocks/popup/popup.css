@@ -1,5 +1,4 @@
 .popup {
-    font-family: ;
     position: fixed;
     z-index: 100;
     color: #000;
@@ -15,84 +14,4 @@
     font-family: 'Inter', 'Arial', sans-serif;
     font-weight: 400;
     font-style: normal;
-}
-
-.popup_opened {
-    display: flex;
-}
-
-.popup__window {
-    position: relative;
-    width: 430px;
-    height: 330px;
-    background-color: #fff;
-    border-radius: 10px;
-}
-.popup__close-button {
-    position: absolute;
-    top: calc(-32px - 8px);
-    right: calc(-32px - 8px);
-    width: 32px;
-    height: 32px;
-    border: none;
-}
-
-.popup__close-button::before {
-    position: absolute;
-    content: '';
-    height: 33px;
-    background-color: #fff;
-    border: 1px solid #fff;
-    top: 0;
-    transform: rotate(45deg);
-}
-
-.popup__close-button::after {
-    position: absolute;
-    content: '';
-    height: 33px;
-    background-color: #fff;
-    border: 1px solid #fff;
-    top: 0;
-    transform: rotate(-45deg);
- }
-
-.popup__content {
-    height: 100%;
-    padding: 34px 36px 37px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.popup__titile {
-    margin: 0;
-    padding: 0;
-    font-weight: 900;
-    font-size: 24px;
-    line-height: 29px;
-}
-
-.popup__input {
-    background: none;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, .2);
-
-    font-size: 14px;
-    line-height: 27px;
-}
-
-.popup__fields {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-.popup__save-button {
-    border: none;
-    height: 50px;
-    background-color: #000;
-
-    color:#fff;
 }
