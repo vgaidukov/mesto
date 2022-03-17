@@ -10,6 +10,21 @@
 @import url('../blocks/main/main.css');
 
 @import url('../blocks/profile/profile.css');
+@import url('../blocks/profile/__main/profile__main.css');
+@import url('../blocks/profile/__info/profile__info.css');
+@import url('../blocks/profile/__avatar/profile__avatar.css');
+@import url('../blocks/profile/__name/profile__name.css');
+@import url('../blocks/profile/__description/profile__description.css');
+@import url('../blocks/profile/__edit-button/profile__edit-button.css');
+@import url('../blocks/profile/__add-button/profile__add-button.css');
+
+
 @import url('../blocks/elements/elements.css');
+@import url('../blocks/element/element.css');
+@import url('../blocks/element/__label/element__label.css');
+@import url('../blocks/element/__name/element__name.css');
+@import url('../blocks/element/__button/element__button.css');
+@import url('../blocks/element/__button/_active/element__button_active.css');
+
 
 @import url('../blocks/footer/footer.css');
