@@ -1,6 +1,7 @@
 .element__button {
     height: 21px;
     width: 24px;
+    margin-left: 30px;
     background-image: url('../../../images/element-like.svg');
     background-repeat: no-repeat;
     background-position: center;
