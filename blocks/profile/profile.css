@@ -78,9 +78,6 @@
 .profile__edit-button {
     width: 24px;
     height: 24px;
-    background: transparent;
-    border: 1px solid white;
-    outline: none;
     background-image: url('../../images/edit-button-img.svg');
     background-repeat: no-repeat;
     background-position: center;
@@ -98,9 +95,6 @@
 .profile__add-button {
     width: 150px;
     height: 50px;
-    outline: none; /* Для синий ободки */
-    border: 1px solid white;
-    background: transparent;
     background-image: url('../../images/add-button-img.svg');
     background-repeat: no-repeat;
     background-position: center;
@@ -110,6 +104,6 @@
 @media screen and (max-width: 767.98px) {
     .profile__add-button {
         width: 100%;
-        margin: 36px 0;
+        margin-top: 36px;
     }
 }
