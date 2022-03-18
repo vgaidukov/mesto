@@ -2,6 +2,7 @@
 @import url('../vendor/fonts/fonts.css');
 
 @import url('../blocks/button/button.css');
+@import url('../blocks/list/list.css');
 
 @import url('../blocks/color-filling/color-filling.css');
 @import url('../blocks/page/page.css');
