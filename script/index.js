@@ -1,6 +1,6 @@
-const popupElement = document.querySelector('.popup');
-const editButton = document.querySelector('.profile__edit-button');
-const closeButton = popupElement.querySelector('.popup__close-button');
+let popupElement = document.querySelector('.popup');
+let editButton = document.querySelector('.profile__edit-button');
+let closeButton = popupElement.querySelector('.popup__close-button');
 
 let profileName = document.querySelector('.profile__name');
 let profileDescription = document.querySelector('.profile__description');
@@ -10,7 +10,6 @@ let popupDescription = document.querySelector('.popup__input_profile-description
 const ESC_KEY = 'Escape';
 
 function openPopup() {
-    console.log(profileName.textContent);
     popupName.value = profileName.textContent;
     popupDescription.value = profileDescription.textContent;
     popupElement.classList.add('popup_opened');
