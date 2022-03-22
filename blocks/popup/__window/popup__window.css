@@ -1,6 +1,6 @@
 .popup__window {
     width: 430px;
-    height: 330px;
+    min-height: 330px;
     background-color: #fff;
     border-radius: 10px;
     position: relative;
@@ -9,6 +9,6 @@
 @media screen and (max-width: 661.98px) {
     .popup__window {
         width: calc(100% - 2*6%);
-        height: 322px;
+        min-height: 322px;
     }
 }
