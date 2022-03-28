@@ -1,5 +1,9 @@
 .element__image {
-    flex: 1 1 auto;
+    position: absolute;
+    top: 0;
+    left: 0;
     object-fit: cover;
-    height: 78%;
+    object-position: center;
+    width: 100%;
+    height: calc(100% - 79px);
 }
