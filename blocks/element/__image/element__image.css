@@ -1,0 +1,5 @@
+.element__image {
+    flex: 1 1 auto;
+    object-fit: cover;
+    height: 78%;
+}
