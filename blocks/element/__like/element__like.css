@@ -1,4 +1,4 @@
-.element__button {
+.element__like {
     height: 21px;
     width: 24px;
     margin-left: 30px;
@@ -8,4 +8,5 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+    border: none;
 }
