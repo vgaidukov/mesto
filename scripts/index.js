@@ -1,6 +1,7 @@
 // переменные для создания и добавления карточек
 
 const cardsContainer = document.querySelector('.elements');
+//import {initialCards} from '../scripts/cards';
 const initialCards = [
     {
       name: 'Архыз',
@@ -94,6 +95,7 @@ function renderPopupImageContainer (event) {
     const popupLabel = popupImageContainer.querySelector('.popup__label');
 
     popupImage.src = target.src;
+    popupImage.alt = target.alt;
     popupLabel.textContent = target.alt;
     openPopup(popupImageContainer);
 }
