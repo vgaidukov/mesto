@@ -132,16 +132,7 @@ function onDocumentKeyUp(event) {
 
 function clickOnCloseButton(event) {
     const target = event.target;
-
-    if (target.classList.contains('popup__close-button_type_profile')) {
-        closePopup(popupProfile);
-    }
-    if (target.classList.contains('popup__close-button_type_card')) {
-       closePopup(popupAddCard);
-    }
-    if (target.classList.contains('popup__close-button_type_image')) {
-       closePopup(popupImageContainer);
-    }
+    closePopup(target.closest('.popup'));
 }
 
 // подставить текущие имя и описание в поля input
