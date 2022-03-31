@@ -154,7 +154,6 @@ function editProfile() {
     popupName.value = profileName.textContent;
     popupDescription.value = profileDescription.textContent;
     openPopup(popupProfile);
-    popupProfile.addEventListener('submit', popupProfileSubmitHandler);
 }
 
 // открыть попап popup_type_add-card
@@ -162,7 +161,6 @@ function editProfile() {
 
 function addCard() {
     openPopup(popupAddCard);
-    popupAddCard.addEventListener('submit', popupCardSubmitHandler);
 }
 
 // обработчик submit редактирования профиля popupProfile
@@ -193,3 +191,5 @@ initialCards.forEach(renderCard);
 editButton.addEventListener('click', editProfile);
 addButton.addEventListener('click', addCard);
 closeButton.forEach((element) => element.addEventListener('click', clickOnCloseButton));
+popupProfile.addEventListener('submit', popupProfileSubmitHandler);
+popupAddCard.addEventListener('submit', popupCardSubmitHandler);
