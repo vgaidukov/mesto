@@ -103,7 +103,6 @@ function renderPopupImageContainer (event) {
 // открыть попап
 
 function openPopup(form) {
-    form.classList.remove('popup_closed');
     form.classList.add('popup_opened');
     document.addEventListener('keyup', onDocumentKeyUp);
 }
@@ -112,7 +111,6 @@ function openPopup(form) {
 
 function closePopup(form) {
     form.classList.remove('popup_opened');
-    form.classList.add('popup_closed');
     document.removeEventListener('keyup', onDocumentKeyUp);
 }
 
@@ -186,7 +184,13 @@ function popupCardSubmitHandler (evt) {
     imgLink.value = '';
 }
 
+// установить значение display: flex для попапов
 
+function popupSetFlex () {
+   popup.forEach((el) => el.style.display = 'flex');
+}
+
+popupSetFlex();
 initialCards.forEach(renderCard);
 editButton.addEventListener('click', editProfile);
 addButton.addEventListener('click', addCard);
