@@ -119,11 +119,8 @@ function closePopup(form) {
 
 function onDocumentKeyUp(event) {
     if (event.key === ESC_KEY) {
-        popup.forEach((element) => {
-            if (element.classList.contains('popup_opened')) {
-                closePopup(element);
-            }
-        })
+        const openedPopup = document.querySelector('.popup_opened');
+        closePopup(openedPopup);
     }
 }
 
