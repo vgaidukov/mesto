@@ -116,7 +116,6 @@ function clickOnOverlay(event) {
     const target = event.target;
     const currentPopup = target.closest('.popup');
     const currentContent = currentPopup.querySelector('.popup__content');
-    console.log(currentContent);
     const withinBoundaries = event.composedPath().includes(currentContent);
 
 	if (!withinBoundaries) {
