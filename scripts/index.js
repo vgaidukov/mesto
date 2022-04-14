@@ -27,6 +27,7 @@ const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const ESC_KEY = 'Escape';
 
+
 //добавить карточку в DOM
 
 function renderCard(item) {
@@ -101,8 +102,10 @@ function onDocumentKeyUp(event) {
 
 function clickOnCloseButton(event) {
     const target = event.target;
-    closePopup(target.closest('.popup'));
-    clearInputErrors(target.closest('.popup'));
+    const currentForm = target.closest('.popup');
+
+    closePopup(currentForm);
+    clearInputErrors(currentForm);
 }
 
 // подставить текущие имя и описание в поля input
@@ -127,6 +130,7 @@ function addCard() {
 
     cardName.value = '';
     imgLink.value = '';
+
     openPopup(popupAddCard);
 }
 
@@ -157,103 +161,15 @@ function popupSetFlex () {
     popup.forEach((el) => el.style.display = 'flex');
 }
 
-//==================================================//
-
-// очистить ошибки ввода и состояние кнопки при закрытии формы
-
-const clearInputErrors = (formElement) => {
-    const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
-    const buttonElement = formElement.querySelector('.popup__submit-button');
-
-    // проверить, есть ли в попапе есть поля ввода
-    if (inputList.length > 0) {
-        inputList.forEach((inputElement) => {
-            hideInputError(formElement, inputElement)
-        });
-        buttonElement.classList.remove('popup__submit-button_inactive');
-    }
-}
-
-// показать сообщение ошибки поля ввода
-
-const showInputError = (formElement, inputElement, errorMessage) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-
-    inputElement.classList.add('popup__input_type_error');
-    errorElement.textContent = errorMessage;
-    errorElement.classList.add('popup__input-error_active');
-};
-
-// скрыть сообщение ошибки поля ввода
-
-const hideInputError = (formElement, inputElement) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-
-    inputElement.classList.remove('popup__input_type_error');
-    errorElement.classList.remove('popup__input-error_active');
-    errorElement.textContent = '';
-};
-
-
-// проверить валидности формы
-
-const isValid = (formElement, inputElement) => {
-    if (!inputElement.validity.valid) {
-        showInputError(formElement, inputElement, inputElement.validationMessage);
-    } else {
-        hideInputError(formElement, inputElement);
-    }
-};
-
-// проверить наличие невалидного поля
-
-const hasInvalidInput = (inputList) => {
-    return inputList.some((inputElement) => {
-        return !inputElement.validity.valid;
-    })
-};
-
-// изменить состояние кнопки в зависимости от валидности полей
-
-const toggleButtonState = (inputList, buttonElement) => {
-    if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add('popup__submit-button_inactive');
-    } else {
-        buttonElement.classList.remove('popup__submit-button_inactive');
-    }
-};
-
-// навесить слушатели на поля ввода, вызвать проверку валидности
-// установить состояние кнопки
-
-const setEventListeners = (formElement) => {
-    const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
-    const buttonElement = formElement.querySelector('.popup__submit-button');
-
-    inputList.forEach((inputElement) => {
-        inputElement.addEventListener('input', () => {
-            isValid(formElement, inputElement)
-            toggleButtonState(inputList, buttonElement);
-        });
-    });
-};
-
-// отменить стандартное поведение по нажатию submit
-
-const enableValidation = () => {
-    const formList = Array.from(document.querySelectorAll('.popup__form'));
-
-    formList.forEach((formElement) => {
-        formElement.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-        });
-        setEventListeners(formElement);
-    });
-};
-
 popupSetFlex();
 initialCards.forEach(renderCard);
+
+
+// включение валидации вызовом enableValidation
+// все настройки передаются при вызове
+
 enableValidation();
+
 editButton.addEventListener('click', editProfile);
 addButton.addEventListener('click', addCard);
 closeButton.forEach((element) => element.addEventListener('click', clickOnCloseButton));
