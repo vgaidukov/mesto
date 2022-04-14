@@ -99,13 +99,32 @@ function onDocumentKeyUp(event) {
 
 // передать попап, на кнопку закрытия которого было нажатие,
 // в качестеве аргумента функции closePopup
+// вызвать сброс ошибок ввода
 
 function clickOnCloseButton(event) {
     const target = event.target;
-    const currentForm = target.closest('.popup');
+    const currentPopup = target.closest('.popup');
 
-    closePopup(currentForm);
-    clearInputErrors(currentForm);
+    closePopup(currentPopup);
+    clearInputErrors(currentPopup);
+}
+
+// проверить нажатие на оверлей
+// вызвать закрытие попапа и сброс ошибок ввода
+
+function clickOnOverlay(event) {
+    const target = event.target;
+    const currentPopup = target.closest('.popup');
+    const currentContent = currentPopup.querySelector('.popup__content');
+    console.log(currentContent);
+    const withinBoundaries = event.composedPath().includes(currentContent);
+
+	if (!withinBoundaries) {
+		closePopup(currentPopup);
+        clearInputErrors(currentPopup);
+	}
+
+
 }
 
 // подставить текущие имя и описание в поля input
@@ -127,10 +146,8 @@ function addCard() {
     const buttonElement = popupAddCard.querySelector('.popup__submit-button');
 
     buttonElement.classList.add('popup__submit-button_inactive');
-
     cardName.value = '';
     imgLink.value = '';
-
     openPopup(popupAddCard);
 }
 
@@ -173,5 +190,8 @@ enableValidation();
 editButton.addEventListener('click', editProfile);
 addButton.addEventListener('click', addCard);
 closeButton.forEach((element) => element.addEventListener('click', clickOnCloseButton));
+popup.forEach((element) => element.addEventListener('mousedown', clickOnOverlay));
 popupProfile.addEventListener('submit', popupProfileSubmitHandler);
 popupAddCard.addEventListener('submit', popupCardSubmitHandler);
+
+
