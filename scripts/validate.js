@@ -89,7 +89,7 @@ const setEventListeners = (formElement) => {
 
 // отменить стандартное поведение по нажатию submit
 
-const enableValidation = () => {
+const enableValidation = (validationConfig) => {
     const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
 
     formList.forEach((formElement) => {
