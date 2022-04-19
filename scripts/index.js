@@ -101,30 +101,16 @@ function onDocumentKeyUp(event) {
     }
 }
 
-// передать попап, на кнопку закрытия которого было нажатие,
-// в качестеве аргумента функции closePopup
-// вызвать сброс ошибок ввода
+// проверить нажатие на оверлей или крестик
+// вызвать закрытие попапа
 
-function clickOnCloseButton(event) {
+function clickToClose(event) {
     const target = event.target;
     const currentPopup = target.closest('.popup');
 
-    closePopup(currentPopup);
-}
-
-// проверить нажатие на оверлей
-// вызвать закрытие попапа и сброс ошибок ввода
-
-function clickOnOverlay(event) {
-    const target = event.target;
-    const currentPopup = target.closest('.popup');
-    const currentContent = currentPopup.querySelector('.popup__content');
-    const withinBoundaries = event.composedPath().includes(currentContent);
-
-	if (!withinBoundaries) {
-		closePopup(currentPopup);
-	}
-
+    if ((target.classList.contains('popup')) || (target.classList.contains('popup__close-button'))) {
+        closePopup(currentPopup);
+    }
 
 }
 
@@ -197,8 +183,8 @@ enableValidation(validationObject);
 
 editButton.addEventListener('click', editProfile);
 addButton.addEventListener('click', addCard);
-closeButton.forEach((element) => element.addEventListener('click', clickOnCloseButton));
-popupList.forEach((element) => element.addEventListener('mousedown', clickOnOverlay));
+closeButton.forEach((element) => element.addEventListener('click', clickToClose));
+popupList.forEach((element) => element.addEventListener('mousedown', clickToClose));
 formProfile.addEventListener('submit', popupProfileSubmitHandler);
 formAddCard.addEventListener('submit', popupCardSubmitHandler);
 
