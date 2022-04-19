@@ -9,15 +9,14 @@ const validationObject = {
 
 // очистить ошибки ввода и состояние кнопки при закрытии формы
 
-const clearInputErrors = (formElement, validationConfig) => {
-    console.log(formElement, validationConfig);
-    const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
-    const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
+const clearInputErrors = (popupElement, validationConfig) => {
+    const inputList = Array.from(popupElement.querySelectorAll(validationConfig.inputSelector));
+    const buttonElement = popupElement.querySelector(validationConfig.submitButtonSelector);
 
     // проверить, есть ли в попапе есть поля ввода
     if (inputList.length > 0) {
         inputList.forEach((inputElement) => {
-            hideInputError(formElement, inputElement)
+            hideInputError(popupElement, inputElement, validationConfig)
         });
         buttonElement.classList.remove(validationConfig.inactiveButtonClass);
     }
@@ -65,10 +64,10 @@ const hasInvalidInput = (inputList) => {
 
 const toggleButtonState = (inputList, buttonElement, validationConfig) => {
     if (hasInvalidInput(inputList)) {
-        buttonElement.disabeles = true;
+        buttonElement.disabled = true;
         buttonElement.classList.add(validationConfig.inactiveButtonClass);
     } else {
-        buttonElement.disabeles = false;
+        buttonElement.disabled = false;
         buttonElement.classList.remove(validationConfig.inactiveButtonClass);
     }
 };

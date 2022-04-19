@@ -93,6 +93,7 @@ function closePopup(form) {
 function onDocumentKeyUp(event) {
     if (event.key === ESC_KEY) {
         const openedPopup = document.querySelector('.popup_opened');
+
         closePopup(openedPopup);
     }
 }
@@ -106,7 +107,6 @@ function clickOnCloseButton(event) {
     const currentPopup = target.closest('.popup');
 
     closePopup(currentPopup);
-    clearInputErrors(currentPopup);
 }
 
 // проверить нажатие на оверлей
@@ -120,7 +120,6 @@ function clickOnOverlay(event) {
 
 	if (!withinBoundaries) {
 		closePopup(currentPopup);
-        clearInputErrors(currentPopup);
 	}
 
 
@@ -133,6 +132,8 @@ function clickOnOverlay(event) {
 function editProfile() {
     popupName.value = profileName.textContent;
     popupDescription.value = profileDescription.textContent;
+
+    clearInputErrors(popupProfile, validationObject);
     openPopup(popupProfile);
 
 }
@@ -147,6 +148,8 @@ function addCard() {
     buttonElement.classList.add('popup__submit-button_inactive');
     cardName.value = '';
     imgLink.value = '';
+
+    clearInputErrors(popupAddCard, validationObject);
     openPopup(popupAddCard);
 }
 
