@@ -1,20 +1,24 @@
 // переменные для создания и добавления карточек
 
+const template = document.querySelector('#element-template');
 const cardsContainer = document.querySelector('.elements');
 
 // переменные попапов
 
-const popup = document.querySelectorAll('.popup');
+const popupList = document.querySelectorAll('.popup');
 
 const popupProfile = document.querySelector('.popup_type_profile');
 const popupName = document.querySelector('.popup__input_type_name');
 const popupDescription = document.querySelector('.popup__input_type_description');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
+const formProfile = popupProfile.querySelector('.popup__form');
+
 
 const popupAddCard = document.querySelector('.popup_type_add-card');
 const cardName = popupAddCard.querySelector('.popup__input_type_card-name');
 const imgLink = popupAddCard.querySelector('.popup__input_type_img-link');
+const formAddCard = popupAddCard.querySelector('.popup__form');
 
 const popupImageContainer = document.querySelector('.popup_type_image');
 const popupImage = popupImageContainer.querySelector('.popup__image');
@@ -38,7 +42,6 @@ function renderCard(item) {
 // навесить случатели на кнопки like, delete, просмотр карточки; выполнить действие
 
 function createCard(item) {
-    const template = document.querySelector('#element-template');
     const card = template.content.querySelector('.element').cloneNode(true);
     const cardImage = card.querySelector('.element__image');
     const cardName = card.querySelector('.element__name');
@@ -130,9 +133,12 @@ function clickOnOverlay(event) {
 // вызвать обработчик по событию submit
 
 function editProfile() {
+    const buttonElement = popupProfile.querySelector('.popup__submit-button');
+
     popupName.value = profileName.textContent;
     popupDescription.value = profileDescription.textContent;
 
+    setButtonActive(buttonElement, validationObject);
     clearInputErrors(popupProfile, validationObject);
     openPopup(popupProfile);
 
@@ -145,11 +151,11 @@ function editProfile() {
 function addCard() {
     const buttonElement = popupAddCard.querySelector('.popup__submit-button');
 
-    buttonElement.classList.add('popup__submit-button_inactive');
     cardName.value = '';
     imgLink.value = '';
 
     clearInputErrors(popupAddCard, validationObject);
+    setButtonInactive(buttonElement, validationObject);
     openPopup(popupAddCard);
 }
 
@@ -177,7 +183,7 @@ function popupCardSubmitHandler (evt) {
 // установить значение display: flex для попапов
 
 function popupSetFlex () {
-    popup.forEach((el) => el.style.display = 'flex');
+    popupList.forEach((el) => el.classList.add('popup_flex'));
 }
 
 popupSetFlex();
@@ -192,8 +198,8 @@ enableValidation(validationObject);
 editButton.addEventListener('click', editProfile);
 addButton.addEventListener('click', addCard);
 closeButton.forEach((element) => element.addEventListener('click', clickOnCloseButton));
-popup.forEach((element) => element.addEventListener('mousedown', clickOnOverlay));
-popupProfile.addEventListener('submit', popupProfileSubmitHandler);
-popupAddCard.addEventListener('submit', popupCardSubmitHandler);
+popupList.forEach((element) => element.addEventListener('mousedown', clickOnOverlay));
+formProfile.addEventListener('submit', popupProfileSubmitHandler);
+formAddCard.addEventListener('submit', popupCardSubmitHandler);
 
 

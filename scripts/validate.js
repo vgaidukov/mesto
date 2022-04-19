@@ -11,15 +11,10 @@ const validationObject = {
 
 const clearInputErrors = (popupElement, validationConfig) => {
     const inputList = Array.from(popupElement.querySelectorAll(validationConfig.inputSelector));
-    const buttonElement = popupElement.querySelector(validationConfig.submitButtonSelector);
 
-    // проверить, есть ли в попапе есть поля ввода
-    if (inputList.length > 0) {
-        inputList.forEach((inputElement) => {
-            hideInputError(popupElement, inputElement, validationConfig)
-        });
-        buttonElement.classList.remove(validationConfig.inactiveButtonClass);
-    }
+    inputList.forEach((inputElement) => {
+        hideInputError(popupElement, inputElement, validationConfig)
+    });
 }
 
 // показать сообщение ошибки поля ввода
@@ -60,15 +55,26 @@ const hasInvalidInput = (inputList) => {
     })
 };
 
+// установить неактивное состояние кнопки
+
+const setButtonInactive = (buttonElement, validationConfig) => {
+    buttonElement.disabled = true;
+    buttonElement.classList.add(validationConfig.inactiveButtonClass);
+}
+
+const setButtonActive = (buttonElement, validationConfig) => {
+    buttonElement.disabled = false;
+    buttonElement.classList.remove(validationConfig.inactiveButtonClass);
+}
+
+
 // изменить состояние кнопки в зависимости от валидности полей
 
 const toggleButtonState = (inputList, buttonElement, validationConfig) => {
     if (hasInvalidInput(inputList)) {
-        buttonElement.disabled = true;
-        buttonElement.classList.add(validationConfig.inactiveButtonClass);
+        setButtonInactive(buttonElement, validationConfig);
     } else {
-        buttonElement.disabled = false;
-        buttonElement.classList.remove(validationConfig.inactiveButtonClass);
+        setButtonActive(buttonElement, validationConfig);
     }
 };
 
