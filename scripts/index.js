@@ -59,20 +59,18 @@ function createCard(item) {
     deleteButton.addEventListener('click', () => {
         card.remove();
     });
-
-    cardImage.addEventListener('click', renderPopupImageContainer);
+    cardImage.addEventListener('click', () => {renderPopupImageContainer(cardImage)});
 
     return card;
 }
 
 // создать попап с картинкой
 
-function renderPopupImageContainer (event) {
-    const target = event.target;
+function renderPopupImageContainer (image) {
 
-    popupImage.src = target.src;
-    popupImage.alt = target.alt;
-    popupLabel.textContent = target.alt;
+    popupImage.src = image.src;
+    popupImage.alt = image.alt;
+    popupLabel.textContent = image.alt;
     openPopup(popupImageContainer);
 }
 
