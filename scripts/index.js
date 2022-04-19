@@ -184,7 +184,7 @@ initialCards.forEach(renderCard);
 // включение валидации вызовом enableValidation
 // все настройки передаются при вызове
 
-enableValidation(validationConfig);
+enableValidation(validationObject);
 
 editButton.addEventListener('click', editProfile);
 addButton.addEventListener('click', addCard);
