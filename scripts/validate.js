@@ -1,4 +1,4 @@
-const validationObject = {
+export const validationObject = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__submit-button',
@@ -95,7 +95,7 @@ const setEventListeners = (formElement, validationConfig) => {
 
 // отменить стандартное поведение по нажатию submit
 
-const enableValidation = (validationConfig) => {
+export function enableValidation (validationConfig) {
     const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
 
     formList.forEach((formElement) => {

@@ -1,3 +1,8 @@
+import initialCards from './cards.js';
+import Card from './card.js';
+
+import { validationObject, enableValidation } from './validate.js';
+
 // переменные для создания и добавления карточек
 
 const template = document.querySelector('#element-template');
@@ -38,6 +43,7 @@ function renderCard(item) {
     cardsContainer.prepend(createCard(item));
 }
 
+/*
 // создать карточку
 // навесить случатели на кнопки like, delete, просмотр карточки; выполнить действие
 
@@ -63,16 +69,17 @@ function createCard(item) {
 
     return card;
 }
+*/
 
 // создать попап с картинкой
 
-function renderPopupImageContainer (image) {
+const renderPopupImageContainer = ((image) => {
 
     popupImage.src = image.src;
     popupImage.alt = image.alt;
     popupLabel.textContent = image.alt;
     openPopup(popupImageContainer);
-}
+});
 
 // открыть попап
 
@@ -171,8 +178,14 @@ function popupSetFlex () {
 }
 
 popupSetFlex();
-initialCards.forEach(renderCard);
 
+//initialCards.forEach(renderCard);
+
+initialCards.forEach((item) => {
+    const card = new Card(item, '#element-template');
+    const cardElement = card.generateCard();
+    cardsContainer.prepend(cardElement);
+});
 
 // включение валидации вызовом enableValidation
 // все настройки передаются при вызове
@@ -185,5 +198,3 @@ closeButton.forEach((element) => element.addEventListener('click', clickToClose)
 popupList.forEach((element) => element.addEventListener('mousedown', clickToClose));
 formProfile.addEventListener('submit', popupProfileSubmitHandler);
 formAddCard.addEventListener('submit', popupCardSubmitHandler);
-
-
