@@ -1,7 +1,8 @@
 import initialCards from './cards.js';
 import Card from './card.js';
 
-import { validationObject, enableValidation } from './validate.js';
+import { validationObject } from './validationObject.js';
+import FormValidator from './formValidator.js';
 
 // переменные для создания и добавления карточек
 
@@ -121,32 +122,35 @@ function clickToClose(event) {
 
 // подставить текущие имя и описание в поля input
 // открыть попап popup_type_profile
-// вызвать обработчик по событию submit
 
 function editProfile() {
-    const buttonElement = popupProfile.querySelector('.popup__submit-button');
+    const formElement = popupProfile.querySelector('.popup__form');
 
     popupName.value = profileName.textContent;
     popupDescription.value = profileDescription.textContent;
 
-    setButtonActive(buttonElement, validationObject);
-    clearInputErrors(popupProfile, validationObject);
+    const formValidator = new FormValidator(validationObject, formElement);
+    formValidator.enableValidation();
+    formValidator.clearInputErrors(formElement);
+
     openPopup(popupProfile);
 
 }
 
 // открыть попап popup_type_add-card
 // установить неактивное состояние кнопки
-// вызвать обработчик по событию submit
 
 function addCard() {
-    const buttonElement = popupAddCard.querySelector('.popup__submit-button');
+    const formElement = popupAddCard.querySelector('.popup__form');
 
     cardName.value = '';
     imgLink.value = '';
 
-    clearInputErrors(popupAddCard, validationObject);
-    setButtonInactive(buttonElement, validationObject);
+    const formValidator = new FormValidator(validationObject, formElement);
+    formValidator.enableValidation();
+    formValidator.clearInputErrors(formElement);
+    formValidator.setButtonInactive(formElement);
+
     openPopup(popupAddCard);
 }
 
@@ -165,7 +169,9 @@ function popupCardSubmitHandler (evt) {
                       name: cardName.value,
                       link: imgLink.value
                     };
-    renderCard(newCard);
+    const card = new Card(newCard, '#element-template', renderPopupImageContainer);
+    cardsContainer.prepend(card.generateCard());
+
     closePopup(popupAddCard);
     cardName.value = '';
     imgLink.value = '';
@@ -183,14 +189,13 @@ const cardsContainer = document.querySelector('.elements');
 
 initialCards.forEach((item) => {
     const card = new Card(item, '#element-template', renderPopupImageContainer);
-    const cardElement = card.generateCard();
-    cardsContainer.prepend(cardElement);
+    cardsContainer.prepend(card.generateCard());
 });
 
 // включение валидации вызовом enableValidation
 // все настройки передаются при вызове
 
-enableValidation(validationObject);
+//enableValidation(validationObject);
 
 editButton.addEventListener('click', editProfile);
 addButton.addEventListener('click', addCard);

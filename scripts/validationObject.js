@@ -7,6 +7,8 @@ export const validationObject = {
     errorClass: 'popup__input-error_active'
   }
 
+/*
+
 // очистить ошибки ввода и состояние кнопки при закрытии формы
 
 const clearInputErrors = (popupElement, validationConfig) => {
@@ -95,7 +97,7 @@ const setEventListeners = (formElement, validationConfig) => {
 
 // отменить стандартное поведение по нажатию submit
 
-export function enableValidation (validationConfig) {
+function enableValidation (validationConfig) {
     const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
 
     formList.forEach((formElement) => {
@@ -105,3 +107,5 @@ export function enableValidation (validationConfig) {
         setEventListeners(formElement, validationConfig);
     });
 };
+
+*/
