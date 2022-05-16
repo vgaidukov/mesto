@@ -5,8 +5,7 @@ import { validationObject, enableValidation } from './validate.js';
 
 // переменные для создания и добавления карточек
 
-const template = document.querySelector('#element-template');
-const cardsContainer = document.querySelector('.elements');
+//const template = document.querySelector('#element-template');
 
 // переменные попапов
 
@@ -36,14 +35,13 @@ const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const ESC_KEY = 'Escape';
 
-
+/*
 //добавить карточку в DOM
 
 function renderCard(item) {
     cardsContainer.prepend(createCard(item));
 }
 
-/*
 // создать карточку
 // навесить случатели на кнопки like, delete, просмотр карточки; выполнить действие
 
@@ -69,17 +67,19 @@ function createCard(item) {
 
     return card;
 }
+
+
+initialCards.forEach(renderCard);
 */
 
 // создать попап с картинкой
 
-const renderPopupImageContainer = ((image) => {
-
+function renderPopupImageContainer(image) {
     popupImage.src = image.src;
     popupImage.alt = image.alt;
     popupLabel.textContent = image.alt;
     openPopup(popupImageContainer);
-});
+}
 
 // открыть попап
 
@@ -179,10 +179,10 @@ function popupSetFlex () {
 
 popupSetFlex();
 
-//initialCards.forEach(renderCard);
+const cardsContainer = document.querySelector('.elements');
 
 initialCards.forEach((item) => {
-    const card = new Card(item, '#element-template');
+    const card = new Card(item, '#element-template', renderPopupImageContainer);
     const cardElement = card.generateCard();
     cardsContainer.prepend(cardElement);
 });

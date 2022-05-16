@@ -1,8 +1,9 @@
 export default class Card {
-    constructor(data, cardSelector) {
+    constructor(data, cardSelector, renderPopupImageContainer) {
         this._elementName = data.name;
         this._elementLink = data.link;
         this._cardSelector = cardSelector;
+        this._renderPopupImageContainer = renderPopupImageContainer;
     }
 
     _getTemplate() {
@@ -37,7 +38,7 @@ export default class Card {
     }
 
     _handleImageClick() {
-        renderPopupImageContainer(this._element.querySelector('.element__image'));
+        this._renderPopupImageContainer(this._element.querySelector('.element__image'));
     }
 
     _setEventListeners() {
