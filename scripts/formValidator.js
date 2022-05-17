@@ -9,7 +9,7 @@ export default class FormValidator {
 
         this._formElement = formElement;
         this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-        this._inputList =  Array.from(this._formElement.querySelectorAll(this._inputSelector))
+        this._inputList =  Array.from(this._formElement.querySelectorAll(this._inputSelector));
     }
 
     enableValidation() {
@@ -65,10 +65,8 @@ export default class FormValidator {
         this._buttonElement.classList.remove(this._inactiveButtonClass);
     }
 
-    clearInputErrors(popupElement) {
-        const inputList = Array.from(popupElement.querySelectorAll(this._inputSelector));
-
-        inputList.forEach((inputElement) => {
+    clearInputErrors() {
+        this._inputList.forEach((inputElement) => {
             this._hideInputError(inputElement)
         });
     }

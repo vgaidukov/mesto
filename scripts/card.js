@@ -1,22 +1,18 @@
 export default class Card {
-    constructor(data, cardSelector, renderPopupImageContainer) {
+    constructor(data, cardSelector, handleCardClick) {
         this._elementName = data.name;
         this._elementLink = data.link;
         this._cardSelector = cardSelector;
-        this._renderPopupImageContainer = renderPopupImageContainer;
-
-
+        this._handleCardClick = handleCardClick;
     }
 
     _getTemplate() {
-          // забираем разметку из HTML и клонируем элемент
         const cardElement = document
         .querySelector(this._cardSelector)
         .content
         .querySelector('.element')
         .cloneNode(true);
 
-    // вернём DOM-элемент карточки
         return cardElement;
     }
 
@@ -45,10 +41,6 @@ export default class Card {
         this._element.remove();
     }
 
-    _handleImageClick() {
-        this._renderPopupImageContainer(this._cardImage);
-    }
-
     _setEventListeners() {
         this._cardLike.addEventListener('click', () => {
             this._handleLikeButtonClick();
@@ -59,7 +51,7 @@ export default class Card {
         });
 
         this._cardImage.addEventListener('click', () => {
-            this._handleImageClick();
+            this._handleCardClick(this._cardImage);
         });
     }
 }
