@@ -4,6 +4,8 @@ import Card from './card.js';
 import { validationObject } from './validationObject.js';
 import FormValidator from './formValidator.js';
 
+const cardsContainer = document.querySelector('.elements');
+
 // переменные попапов
 
 const popupList = document.querySelectorAll('.popup');
@@ -87,7 +89,7 @@ function clickToClose(event) {
         closePopup(event.target.closest('.popup'))
     }
     if (event.target.classList.contains('popup__close-button')) {
-      closePopup(event.target.closest('.popup'))
+        closePopup(event.target.closest('.popup'))
     }
 
 }
@@ -96,15 +98,10 @@ function clickToClose(event) {
 // открыть попап popup_type_profile
 
 function editProfile() {
-    const formElement = popupProfile.querySelector('.popup__form');
-
     popupName.value = profileName.textContent;
     popupDescription.value = profileDescription.textContent;
 
-    const formValidator = new FormValidator(validationObject, formElement);
-    formValidator.enableValidation();
-    formValidator.clearInputErrors();
-
+    formValidators['profile-info'].clearInputErrors();
     openPopup(popupProfile);
 }
 
@@ -112,15 +109,11 @@ function editProfile() {
 // установить неактивное состояние кнопки
 
 function addCard() {
-    const formElement = popupAddCard.querySelector('.popup__form');
-
     cardName.value = '';
     imgLink.value = '';
 
-    const formValidator = new FormValidator(validationObject, formElement);
-    formValidator.enableValidation();
-    formValidator.clearInputErrors();
-    formValidator.setButtonInactive();
+    formValidators['add-card'].clearInputErrors();
+    formValidators['add-card'].setButtonInactive();
 
     openPopup(popupAddCard);
 }
@@ -154,12 +147,31 @@ function setPopupFlex () {
 
 setPopupFlex();
 
-const cardsContainer = document.querySelector('.elements');
-
 initialCards.forEach(item => renderCard(item));
+
+// объект валидаторов форм
+
+const formValidators = {}
+
+// включение валидации
+
+function enableValidation(config) {
+    const formList = Array.from(document.querySelectorAll(config.formSelector))
+    formList.forEach((formElement) => {
+        const validator = new FormValidator(config, formElement)
+
+    // получаем данные из атрибута `name` у формы
+        const formName = formElement.getAttribute('name')
+        formValidators[formName] = validator;
+
+        validator.enableValidation();
+    });
+};
+
+enableValidation(validationObject);
 
 editButton.addEventListener('click', editProfile);
 addButton.addEventListener('click', addCard);
-popupList.forEach((popup) => popup.addEventListener('mousedown', clickToClose));
 formProfile.addEventListener('submit', handleProfileFormSubmit);
 formAddCard.addEventListener('submit', handlePopupCardSubmit);
+popupList.forEach((popup) => popup.addEventListener('mousedown', clickToClose));
