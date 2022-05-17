@@ -1,8 +1,8 @@
 import initialCards from './cards.js';
-import Card from './card.js';
+import Card from './Card.js';
 
 import { validationObject } from './validationObject.js';
-import FormValidator from './formValidator.js';
+import FormValidator from './FormValidator.js';
 
 const cardsContainer = document.querySelector('.elements');
 
