@@ -4,6 +4,8 @@ import Card from './card.js';
 import { validationObject } from './validationObject.js';
 import FormValidator from './formValidator.js';
 
+import Section from './components/Section.js';
+
 // переменные для создания и добавления карточек
 
 //const template = document.querySelector('#element-template');
@@ -187,10 +189,21 @@ popupSetFlex();
 
 const cardsContainer = document.querySelector('.elements');
 
-initialCards.forEach((item) => {
+const cardsList = new Section({
+    items: initialCards,
+    renderer: (item) => {
+        const card = new Card(item, '#element-template', renderPopupImageContainer);
+        cardsContainer.prepend(card.generateCard());
+    }
+});
+cardsList.renderItem();
+
+
+
+/*initialCards.forEach((item) => {
     const card = new Card(item, '#element-template', renderPopupImageContainer);
     cardsContainer.prepend(card.generateCard());
-});
+}); */
 
 // включение валидации вызовом enableValidation
 // все настройки передаются при вызове
