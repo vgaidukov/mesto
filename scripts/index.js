@@ -5,8 +5,8 @@ import { validationObject } from './validationObject.js';
 import FormValidator from './components/FormValidator.js';
 
 import Section from './components/Section.js';
-import Popup from './components/Popup.js';
 import PopupWithImage from './components/PopupWithImage.js';
+import PopupWithForm from './components/PopupWithForm.js';
 
 
 // переменные для создания и добавления карточек
@@ -31,14 +31,15 @@ const imgLink = popupAddCard.querySelector('.popup__input_type_img-link');
 const formAddCard = popupAddCard.querySelector('.popup__form');
 
 const popupImageContainer = document.querySelector('.popup_type_image');
+const editButton = document.querySelector('.profile__edit-button');
+const addButton = document.querySelector('.profile__add-button');
+
 //const popupImage = popupImageContainer.querySelector('.popup__image');
 //const popupLabel = popupImageContainer.querySelector('.popup__label');
 
 // переменные кнопок
 
 //const closeButtonList = document.querySelectorAll('.popup__close-button');
-const editButton = document.querySelector('.profile__edit-button');
-const addButton = document.querySelector('.profile__add-button');
 //const ESC_KEY = 'Escape';
 
 /*
@@ -124,19 +125,23 @@ function clickToClose(event) {
 function editProfile() {
     const formElement = popupProfile.querySelector('.popup__form');
 
-    popupName.value = profileName.textContent;
-    popupDescription.value = profileDescription.textContent;
-
     const formValidator = new FormValidator(validationObject, formElement);
     formValidator.enableValidation();
     formValidator.clearInputErrors(formElement);
 
+    popupName.value = profileName.textContent;
+    popupDescription.value = profileDescription.textContent;
 
     //openPopup(popupProfile);
 
-    const popup = new Popup(popupProfile);
-    popup.open();
-    popup.setEventListeners();
+    const popupWithForm = new PopupWithForm(popupProfile, () => {
+        profileName.textContent = popupName.value;
+        profileDescription.textContent = popupDescription.value;
+        popupWithForm.close();
+    });
+
+    popupWithForm.setEventListeners();
+    popupWithForm.open();
 
 }
 
@@ -154,20 +159,32 @@ function addCard() {
     formValidator.clearInputErrors(formElement);
     formValidator.setButtonInactive(formElement);
 
-    const popup = new Popup(popupAddCard);
-    popup.open();
-    popup.setEventListeners();
+    const popupWithForm = new PopupWithForm(popupAddCard, () => {
+            const newCard = {
+                name: cardName.value,
+                link: imgLink.value
+            };
+            const card = new Card(newCard, '#element-template', renderPopupImageContainer);
+            cardsContainer.prepend(card.generateCard());
+
+            popupWithForm.close();
+            cardName.value = '';
+            imgLink.value = '';
+        });
+
+    popupWithForm.setEventListeners();
+    popupWithForm.open();
 
     //openPopup(popupAddCard);
 }
 
 // обработчик submit редактирования профиля popupProfile
 
-function popupProfileSubmitHandler (evt) {
-    profileName.textContent = popupName.value;
-    profileDescription.textContent = popupDescription.value;
-    closePopup(popupProfile);
-}
+//function popupProfileSubmitHandler (evt) {
+//    profileName.textContent = popupName.value;
+//    profileDescription.textContent = popupDescription.value;
+//    closePopup(popupProfile);
+//}
 
 // создать попап с картинкой
 
@@ -176,19 +193,20 @@ function renderPopupImageContainer(image) {
     //popupImage.alt = image.alt;
     //popupLabel.textContent = image.alt;
 
-    const popup = new PopupWithImage(popupImageContainer);
-    popup.open({
+    const popupWithImage = new PopupWithImage(popupImageContainer);
+    popupWithImage.setEventListeners();
+    popupWithImage.open({
         src: image.src,
         alt: image.alt,
         textContent: image.alt
     });
-    popup.setEventListeners();
 
     //openPopup(popupImageContainer);
 }
 
 // обработчик submit добавления карточки popupAddCard
 
+/*
 function popupCardSubmitHandler (evt) {
     const newCard = {
                       name: cardName.value,
@@ -200,7 +218,7 @@ function popupCardSubmitHandler (evt) {
     closePopup(popupAddCard);
     cardName.value = '';
     imgLink.value = '';
-}
+}*/
 
 // установить значение display: flex для попапов
 
@@ -238,5 +256,5 @@ editButton.addEventListener('click', editProfile);
 addButton.addEventListener('click', addCard);
 //closeButtonList.forEach((element) => element.addEventListener('click', clickToClose));
 //popupList.forEach((element) => element.addEventListener('mousedown', clickToClose));
-formProfile.addEventListener('submit', popupProfileSubmitHandler);
-formAddCard.addEventListener('submit', popupCardSubmitHandler);
+//formProfile.addEventListener('submit', popupProfileSubmitHandler);
+//formAddCard.addEventListener('submit', popupCardSubmitHandler);

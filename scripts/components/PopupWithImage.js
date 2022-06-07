@@ -14,6 +14,5 @@ export default class PopupWithImage extends Popup {
         this._popupLabel.textContent = data.textContent;
 
         this._popupSelector.classList.add('popup_opened');
-        document.addEventListener('keyup', this._handleEscClose.bind(this));
     }
 }
