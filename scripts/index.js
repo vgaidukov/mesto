@@ -1,11 +1,12 @@
 import initialCards from './cards.js';
-import Card from './Card.js';
+import Card from './components/Card.js';
 
 import { validationObject } from './validationObject.js';
-import FormValidator from './formValidator.js';
+import FormValidator from './components/FormValidator.js';
 
 import Section from './components/Section.js';
 import Popup from './components/Popup.js';
+import PopupWithImage from './components/PopupWithImage.js';
 
 
 // переменные для создания и добавления карточек
@@ -30,12 +31,12 @@ const imgLink = popupAddCard.querySelector('.popup__input_type_img-link');
 const formAddCard = popupAddCard.querySelector('.popup__form');
 
 const popupImageContainer = document.querySelector('.popup_type_image');
-const popupImage = popupImageContainer.querySelector('.popup__image');
-const popupLabel = popupImageContainer.querySelector('.popup__label');
+//const popupImage = popupImageContainer.querySelector('.popup__image');
+//const popupLabel = popupImageContainer.querySelector('.popup__label');
 
 // переменные кнопок
 
-const closeButtonList = document.querySelectorAll('.popup__close-button');
+//const closeButtonList = document.querySelectorAll('.popup__close-button');
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 //const ESC_KEY = 'Escape';
@@ -132,6 +133,7 @@ function editProfile() {
 
 
     //openPopup(popupProfile);
+
     const popup = new Popup(popupProfile);
     popup.open();
     popup.setEventListeners();
@@ -170,13 +172,18 @@ function popupProfileSubmitHandler (evt) {
 // создать попап с картинкой
 
 function renderPopupImageContainer(image) {
-    popupImage.src = image.src;
-    popupImage.alt = image.alt;
-    popupLabel.textContent = image.alt;
+    //popupImage.src = image.src;
+    //popupImage.alt = image.alt;
+    //popupLabel.textContent = image.alt;
 
-    const popup = new Popup(popupImageContainer);
-    popup.open();
+    const popup = new PopupWithImage(popupImageContainer);
+    popup.open({
+        src: image.src,
+        alt: image.alt,
+        textContent: image.alt
+    });
     popup.setEventListeners();
+
     //openPopup(popupImageContainer);
 }
 
