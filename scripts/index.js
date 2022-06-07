@@ -134,7 +134,8 @@ function editProfile() {
 
     //openPopup(popupProfile);
 
-    const popupWithForm = new PopupWithForm(popupProfile, () => {
+    const popupWithForm = new PopupWithForm(popupProfile, (evt) => {
+        evt.preventDefault();
         profileName.textContent = popupName.value;
         profileDescription.textContent = popupDescription.value;
         popupWithForm.close();
@@ -151,25 +152,26 @@ function editProfile() {
 function addCard() {
     const formElement = popupAddCard.querySelector('.popup__form');
 
-    cardName.value = '';
-    imgLink.value = '';
+    //cardName.value = '';
+    //imgLink.value = '';
 
     const formValidator = new FormValidator(validationObject, formElement);
     formValidator.enableValidation();
     formValidator.clearInputErrors(formElement);
     formValidator.setButtonInactive(formElement);
 
-    const popupWithForm = new PopupWithForm(popupAddCard, () => {
+    const popupWithForm = new PopupWithForm(popupAddCard, (evt) => {
+            evt.preventDefault();
             const newCard = {
                 name: cardName.value,
                 link: imgLink.value
             };
-            const card = new Card(newCard, '#element-template', renderPopupImageContainer);
+            const card = new Card(newCard, '#element-template', handleCardClick);
             cardsContainer.prepend(card.generateCard());
 
             popupWithForm.close();
-            cardName.value = '';
-            imgLink.value = '';
+            //cardName.value = '';
+            //imgLink.value = '';
         });
 
     popupWithForm.setEventListeners();
@@ -188,7 +190,7 @@ function addCard() {
 
 // создать попап с картинкой
 
-function renderPopupImageContainer(image) {
+function handleCardClick(image) {
     //popupImage.src = image.src;
     //popupImage.alt = image.alt;
     //popupLabel.textContent = image.alt;
@@ -235,7 +237,7 @@ const cardsContainer = document.querySelector('.elements');
 const cardsList = new Section({
     items: initialCards,
     renderer: (item) => {
-        const card = new Card(item, '#element-template', renderPopupImageContainer);
+        const card = new Card(item, '#element-template', handleCardClick);
         cardsContainer.prepend(card.generateCard());
     }
 });
