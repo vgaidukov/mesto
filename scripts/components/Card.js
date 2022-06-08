@@ -7,14 +7,12 @@ export default class Card {
     }
 
     _getTemplate() {
-          // забираем разметку из HTML и клонируем элемент
         const cardElement = document
         .querySelector(this._cardSelector)
         .content
         .querySelector('.element')
         .cloneNode(true);
 
-    // вернём DOM-элемент карточки
         return cardElement;
     }
 
@@ -37,10 +35,6 @@ export default class Card {
         this._element.remove();
     }
 
-    _handleImageClick() {
-        this._handleCardClick(this._element.querySelector('.element__image'));
-    }
-
     _setEventListeners() {
         this._element.querySelector('.element__like').addEventListener('click', () => {
             this._handleLikeButtonClick();
@@ -50,8 +44,8 @@ export default class Card {
             this._handleDeleteButtonClick();
         });
 
-        this._element.querySelector('.element__image').addEventListener('click', () => {
-            this._handleImageClick();
+        this._element.querySelector('.element__image').addEventListener('click', (evt) => {
+            this._handleCardClick(evt.target);
         });
     }
 }
