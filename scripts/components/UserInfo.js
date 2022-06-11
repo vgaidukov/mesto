@@ -1,3 +1,5 @@
+import { profileName, profileDescription } from '../utils/constants.js';
+
 export default class UserInfo {
     constructor (data) {
         this._profileName = data.profileName;
@@ -12,8 +14,6 @@ export default class UserInfo {
     }
 
     setUserInfo(data) {
-        const profileName = document.querySelector('.profile__name');
-        const profileDescription = document.querySelector('.profile__description');
         profileName.textContent = data['profile-name'];
         profileDescription.textContent = data['profile-description'];
     }
