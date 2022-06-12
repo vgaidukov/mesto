@@ -1,7 +1,7 @@
-import './pages/index.css';
+import './index.css';
 
-import initialCards from './scripts/utils/cards.js';
-import { validationObject } from './scripts/utils/validationObject.js';
+import initialCards from '../scripts/utils/cards.js';
+import { validationObject } from '../scripts/utils/validationObject.js';
 
 import { addButton,
         editButton,
@@ -16,14 +16,14 @@ import { addButton,
         popupList,
         popupName,
         popupProfile
-    } from './scripts/utils/constants.js'
+    } from '../scripts/utils/constants.js'
 
-import Section from './scripts/components/Section.js';
-import Card from './scripts/components/Card.js';
-import PopupWithImage from './scripts/components/PopupWithImage.js';
-import PopupWithForm from './scripts/components/PopupWithForm.js';
-import UserInfo from './scripts/components/UserInfo.js';
-import FormValidator from './scripts/components/FormValidator.js';
+import Section from '../scripts/components/Section.js';
+import Card from '../scripts/components/Card.js';
+import PopupWithImage from '../scripts/components/PopupWithImage.js';
+import PopupWithForm from '../scripts/components/PopupWithForm.js';
+import UserInfo from '../scripts/components/UserInfo.js';
+import FormValidator from '../scripts/components/FormValidator.js';
 
 // установить значение display: flex для попапов
 const popupSetFlex = () => {
