@@ -14,21 +14,13 @@ export default class PopupWithForm extends Popup{
     }
 
     setEventListeners() {
-        document.addEventListener('keyup',this._handleEscClose);
         this._popupSelector.addEventListener('mousedown', this._clickToCloseHandler);
         this._popupSelector.addEventListener('submit', this._submitHandler);
-
-    }
-
-    _removerEventListeners() {
-        document.removeEventListener('keyup', this._handleEscClose);
-        this._popupSelector.removeEventListener('mousedown', this._clickToCloseHandler);
-        this._popupSelector.removeEventListener('submit', this._submitHandler);
     }
 
     close() {
         this._popupSelector.classList.remove('popup_opened');
-        this._removerEventListeners();
+        document.removeEventListener('keyup', this._handleEscClose);
         this._popupForm.reset();
     }
 

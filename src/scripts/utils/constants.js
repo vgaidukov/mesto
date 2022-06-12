@@ -18,3 +18,6 @@ export const popupAddCard = document.querySelector('.popup_type_add-card');
 export const cardName = popupAddCard.querySelector('.popup__input_type_card-name');
 export const imgLink = popupAddCard.querySelector('.popup__input_type_img-link');
 
+export const formProfile = popupProfile.querySelector('.popup__form');
+export const formAddCard = popupAddCard.querySelector('.popup__form');
+
