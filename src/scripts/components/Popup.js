@@ -1,36 +1,33 @@
 export default class Popup {
-    constructor(popupSelector) {
-        this._popupSelector = popupSelector;
-
-        // функция-обработчик закрытия попапа по нажатию на Esc
-        this._escCloseHandler = function(event) {
-            if (event.key === 'Escape') {
-                this.close();
-            }
-        }
-        this._handleEscClose = this._escCloseHandler.bind(this); // приватное свойство с функцией-обработчиком для удаления слушателя
-
-        // функция-обработчик закрытия попапа по нажатию на оверлей или крест
-        this._clickToCloseHandler = (event) => {
-            const target = event.target;
-            if ((target.classList.contains('popup')) || (target.classList.contains('popup__close-button'))) {
-                this.close();
-            }
-        }
+    constructor(popupElement) {
+        this._popupElement = popupElement;
+        this._escButtonHandler = this._handleEscButton.bind(this);
     }
 
     open() {
-        this._popupSelector.classList.add('popup_opened');
-        document.addEventListener('keyup',this._handleEscClose);
+        this._popupElement.classList.add('popup_opened');
+        document.addEventListener('keyup',this._escButtonHandler);
     }
 
     close() {
-        this._popupSelector.classList.remove('popup_opened');
-        document.removeEventListener('keyup', this._handleEscClose);
-//        this._removeEventListeners();
+        this._popupElement.classList.remove('popup_opened');
+        document.removeEventListener('keyup', this._escButtonHandler);
     }
 
     setEventListeners() {
-        this._popupSelector.addEventListener('mousedown', this._clickToCloseHandler);
+        this._popupElement.addEventListener('mousedown', this._handleClickToClose);
+    }
+
+    _handleEscButton(event) {
+        if (event.key === 'Escape') {
+            this.close();
+        }
+    }
+
+    _handleClickToClose = (event) => {
+        const target = event.target;
+        if ((target.classList.contains('popup')) || (target.classList.contains('popup__close-button'))) {
+            this.close();
+        }
     }
 }

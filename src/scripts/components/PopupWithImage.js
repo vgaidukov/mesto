@@ -1,11 +1,11 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithImage extends Popup {
-    constructor(popupSelector) {
-        super (popupSelector);
+    constructor(popupElement) {
+        super (popupElement);
 
-        this._popupImage = this._popupSelector.querySelector('.popup__image');
-        this._popupLabel = this._popupSelector.querySelector('.popup__label');
+        this._popupImage = this._popupElement.querySelector('.popup__image');
+        this._popupLabel = this._popupElement.querySelector('.popup__label');
     }
 
     open(data) {
@@ -13,7 +13,6 @@ export default class PopupWithImage extends Popup {
         this._popupImage.alt = data.alt;
         this._popupLabel.textContent = data.textContent;
 
-        this._popupSelector.classList.add('popup_opened');
-        document.addEventListener('keyup',this._handleEscClose);
+        super.open()
     }
 }

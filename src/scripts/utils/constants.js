@@ -1,10 +1,10 @@
-export const cardsContainer = document.querySelector('.elements');
+export const cardsContainer = '.elements';
 
-export const editButton = document.querySelector('.profile__edit-button');
-export const addButton = document.querySelector('.profile__add-button');
+export const buttonEditProfile = document.querySelector('.profile__edit-button');
+export const buttonAddCard = document.querySelector('.profile__add-button');
 
-export const profileDescription = document.querySelector('.profile__description');
-export const profileName = document.querySelector('.profile__name');
+export const profileNameSelector = '.profile__name';
+export const profileDescriptionSelector = '.profile__description';
 
 // переменные попапов
 export const popupImageContainer = document.querySelector('.popup_type_image');

@@ -3,15 +3,15 @@ import './index.css';
 import initialCards from '../scripts/utils/cards.js';
 import { validationObject } from '../scripts/utils/validationObject.js';
 
-import { addButton,
-        editButton,
+import { buttonAddCard,
+        buttonEditProfile,
         cardName,
         cardsContainer,
         formAddCard,
         formProfile,
         imgLink,
-        profileDescription,
-        profileName,
+        profileNameSelector,
+        profileDescriptionSelector,
         popupAddCard,
         popupDescription,
         popupImageContainer,
@@ -28,51 +28,51 @@ import UserInfo from '../scripts/components/UserInfo.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 
 // установить значение display: flex для попапов
-const popupSetFlex = () => {
+const setPopupFlex = () => {
     popupList.forEach((el) => el.classList.add('popup_flex'));
 }
 
 const formProfileValidator = new FormValidator(validationObject, formProfile);
 const formAddCardValidator = new FormValidator(validationObject, formAddCard);
 
-// создать экземпляр класса PopupWithForm для popup_type_profile
-const popupWithFormProfile = new PopupWithForm(popupProfile, (evt) => { // передать селектор формы и обработчик сабмита в конструктор класса
-    userInfo.setUserInfo(popupWithFormProfile.getInputValues(evt)); // добавить данные пользователя на страницу из полей формы по сабмиту
+const userInfo = new UserInfo ({profileNameSelector, profileDescriptionSelector});
+
+const popupWithFormProfile = new PopupWithForm(popupProfile, (evt) => {
+    userInfo.setUserInfo(popupWithFormProfile.getInputValues(evt)); // В параметр обработчика вы должны получить объект со значениями всех инпутов и дальше использовать его для установки новых значений.
     popupWithFormProfile.close();
 });
 
-// создать экземпляр класса PopupWithForm для popup_type_add-card
-const popupWithFormAddCard = new PopupWithForm(popupAddCard, (evt) => { // передать селектор формы и обработчик сабмита в конструктор класса
-    // создать объект со значениями полей формы
+const popupWithFormAddCard = new PopupWithForm(popupAddCard, () => {
     const newCard = {
         name: cardName.value,
         link: imgLink.value
     };
-    // создать и добавить новый экземляр класса Card в секцию с карточками
-    const card = new Card(newCard, '#element-template', handleCardClick);
-    cardsContainer.prepend(card.generateCard());
+    cardsList.addItem(createCard(newCard));
     popupWithFormAddCard.close();
 });
 
 const popupWithImage = new PopupWithImage(popupImageContainer);
 
-const userInfo = new UserInfo ({profileName, profileDescription});
+const cardsList = new Section( {
+    items: initialCards,
+    renderer: (item) => {
+        cardsList.addItem(createCard(item));
+    }
+    },
+    cardsContainer
+);
 
 const editProfile = () => {
-
-    // очистить ошибки
     formProfileValidator.clearInputErrors(formProfile);
 
     // подставить данные пользователя в форму
     popupName.value = userInfo.getUserInfo().profileName;
     popupDescription.value = userInfo.getUserInfo().profileDescription;
 
-    // установить слушатели и открыть попап popup_type_profile
     popupWithFormProfile.open();
 }
 
 const addCard = () => {
-    //очистить ошибки, неактивное состояние кнопки
     formAddCardValidator.clearInputErrors(formAddCard);
     formAddCardValidator.setButtonInactive(formAddCard);
 
@@ -80,35 +80,33 @@ const addCard = () => {
 }
 
 // обработчик клика на карточку
-const handleCardClick = (image) => {
+const handleCardClick = (name, link) => {
     popupWithImage.open({
-        src: image.src,
-        alt: image.alt,
-        textContent: image.alt
+        src: link,
+        alt: name,
+        textContent: name
     });
 }
 
-// отрисовка секции с карточками из начального объекта
-const cardsList = new Section({
-    items: initialCards,
-    renderer: (item) => {
-        const card = new Card(item, '#element-template', handleCardClick);
-        cardsContainer.prepend(card.generateCard());
-    }
-});
+// создать карточку
+const createCard = (element) => {
+    const card = new Card(element, '#element-template', handleCardClick);
+    return card.generateCard();
+}
 
+// отрисовка секции с карточками
 cardsList.renderItem();
 
-popupSetFlex();
+setPopupFlex();
 
 // установить слушатели
 popupWithFormAddCard.setEventListeners();
 popupWithFormProfile.setEventListeners();
 popupWithImage.setEventListeners();
 
-//запустить валидацию
+buttonEditProfile.addEventListener('click', editProfile);
+buttonAddCard.addEventListener('click', addCard);
+
+// запустить валидацию
 formProfileValidator.enableValidation();
 formAddCardValidator.enableValidation();
-
-editButton.addEventListener('click', editProfile);
-addButton.addEventListener('click', addCard);

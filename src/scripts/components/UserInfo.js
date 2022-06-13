@@ -1,9 +1,7 @@
-import { profileName, profileDescription } from '../utils/constants.js';
-
 export default class UserInfo {
-    constructor (data) {
-        this._profileName = data.profileName;
-        this._profileDescription = data.profileDescription;
+    constructor ( {profileNameSelector, profileDescriptionSelector} ) {
+        this._profileName = document.querySelector(profileNameSelector);
+        this._profileDescription = document.querySelector(profileDescriptionSelector);
     }
 
     getUserInfo() {
@@ -14,7 +12,7 @@ export default class UserInfo {
     }
 
     setUserInfo(data) {
-        profileName.textContent = data['profile-name'];
-        profileDescription.textContent = data['profile-description'];
+        this._profileName.textContent = data['profile-name'];
+        this._profileDescription.textContent = data['profile-description'];
     }
 }
