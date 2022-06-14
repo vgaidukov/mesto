@@ -12,12 +12,12 @@ import { buttonAddCard,
         imgLink,
         profileNameSelector,
         profileDescriptionSelector,
-        popupAddCard,
+        popupAddCardSelector,
+        popupProfileSelector,
         popupDescription,
-        popupImageContainer,
+        popupImageSelector,
         popupList,
-        popupName,
-        popupProfile
+        popupName
     } from '../scripts/utils/constants.js'
 
 import Section from '../scripts/components/Section.js';
@@ -37,21 +37,24 @@ const formAddCardValidator = new FormValidator(validationObject, formAddCard);
 
 const userInfo = new UserInfo ({profileNameSelector, profileDescriptionSelector});
 
-const popupWithFormProfile = new PopupWithForm(popupProfile, (evt) => {
-    userInfo.setUserInfo(popupWithFormProfile.getInputValues(evt)); // В параметр обработчика вы должны получить объект со значениями всех инпутов и дальше использовать его для установки новых значений.
+const popupWithFormProfile = new PopupWithForm(popupProfileSelector, (data) => { // по заданию класс принимает в конструктор колбэк сабмита формы, поэтому передавал событие
+    // console.log(evt) // http://joxi.ru/VrwaZZGioQvq82
+    // userInfo.setUserInfo(popupWithFormProfile.getInputValues(evt));
+
+    userInfo.setUserInfo(data);
     popupWithFormProfile.close();
 });
 
-const popupWithFormAddCard = new PopupWithForm(popupAddCard, () => {
+const popupWithFormAddCard = new PopupWithForm(popupAddCardSelector, (data) => {
     const newCard = {
-        name: cardName.value,
-        link: imgLink.value
+        name: data['card-name'],
+        link: data['img-link']
     };
     cardsList.addItem(createCard(newCard));
     popupWithFormAddCard.close();
 });
 
-const popupWithImage = new PopupWithImage(popupImageContainer);
+const popupWithImage = new PopupWithImage(popupImageSelector);
 
 const cardsList = new Section( {
     items: initialCards,
@@ -66,8 +69,9 @@ const editProfile = () => {
     formProfileValidator.clearInputErrors(formProfile);
 
     // подставить данные пользователя в форму
-    popupName.value = userInfo.getUserInfo().profileName;
-    popupDescription.value = userInfo.getUserInfo().profileDescription;
+    const userInfoData = userInfo.getUserInfo();
+    popupName.value = userInfoData.profileName;
+    popupDescription.value = userInfoData.profileDescription;
 
     popupWithFormProfile.open();
 }
