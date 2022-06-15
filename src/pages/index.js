@@ -32,15 +32,14 @@ const setPopupFlex = () => {
     popupList.forEach((el) => el.classList.add('popup_flex'));
 }
 
+setPopupFlex();
+
 const formProfileValidator = new FormValidator(validationObject, formProfile);
 const formAddCardValidator = new FormValidator(validationObject, formAddCard);
 
 const userInfo = new UserInfo ({profileNameSelector, profileDescriptionSelector});
 
-const popupWithFormProfile = new PopupWithForm(popupProfileSelector, (data) => { // по заданию класс принимает в конструктор колбэк сабмита формы, поэтому передавал событие
-    // console.log(evt) // http://joxi.ru/VrwaZZGioQvq82
-    // userInfo.setUserInfo(popupWithFormProfile.getInputValues(evt));
-
+const popupWithFormProfile = new PopupWithForm(popupProfileSelector, (data) => {
     userInfo.setUserInfo(data);
     popupWithFormProfile.close();
 });
@@ -100,8 +99,6 @@ const createCard = (element) => {
 
 // отрисовка секции с карточками
 cardsList.renderItem();
-
-setPopupFlex();
 
 // установить слушатели
 popupWithFormAddCard.setEventListeners();
