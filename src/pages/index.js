@@ -1,15 +1,15 @@
 import './index.css';
 
-import initialCards from '../scripts/utils/cards.js';
+//import initialCards from '../scripts/utils/cards.js';
 import { validationObject } from '../scripts/utils/validationObject.js';
 
 import { buttonAddCard,
         buttonEditProfile,
-        cardName,
+        //cardName,
         cardsContainer,
         formAddCard,
         formProfile,
-        imgLink,
+        //imgLink,
         profileNameSelector,
         profileDescriptionSelector,
         profileAvatarSelector,
@@ -57,7 +57,7 @@ const popupWithFormAddCard = new PopupWithForm(popupAddCardSelector, (data) => {
 const popupWithImage = new PopupWithImage(popupImageSelector);
 
 const cardsList = new Section( {
-    items: initialCards,
+    //items: initialCards,
     renderer: (item) => {
         cardsList.addItem(createCard(item));
     }
