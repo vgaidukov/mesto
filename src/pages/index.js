@@ -41,7 +41,8 @@ const formAddCardValidator = new FormValidator(validationObject, formAddCard);
 const userInfo = new UserInfo ({profileNameSelector, profileDescriptionSelector, profileAvatarSelector});
 
 const popupWithFormProfile = new PopupWithForm(popupProfileSelector, (data) => {
-    userInfo.setUserInfo(data);
+    //userInfo.setUserInfo(data);
+    userInfo.patchUserInfo(data);
     popupWithFormProfile.close();
 });
 

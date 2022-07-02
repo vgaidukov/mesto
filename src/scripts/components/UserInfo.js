@@ -12,7 +12,7 @@ export default class UserInfo {
         };
     }
 
-    setUserInfo(data) {
+    setUserInfo() {
         fetch('https://nomoreparties.co/v1/cohort-42/users/me', {
             method: 'GET',
             headers: {
@@ -39,5 +39,22 @@ export default class UserInfo {
 
         //this._profileName.textContent = data['profile-name'];
         //this._profileDescription.textContent = data['profile-description'];
+    }
+
+    patchUserInfo(data){
+        fetch('https://mesto.nomoreparties.co/v1/cohort-42/users/me', {
+            method: 'PATCH',
+            headers: {
+                authorization: '34cb6bbb-dff7-49e7-b585-4fe4d4886a94',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: data['profile-name'],
+                about: data['profile-description']
+            })
+        })
+            .catch((err) => {
+                console.log(err, 'Ошибка. Запрос не выполнен');
+            });
     }
 }
