@@ -5,6 +5,7 @@ export const buttonAddCard = document.querySelector('.profile__add-button');
 
 export const profileNameSelector = '.profile__name';
 export const profileDescriptionSelector = '.profile__description';
+export const profileAvatarSelector = '.profile__avatar';
 
 // переменные попапов
 export const popupImageSelector = '.popup_type_image';

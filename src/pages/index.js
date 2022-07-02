@@ -12,6 +12,7 @@ import { buttonAddCard,
         imgLink,
         profileNameSelector,
         profileDescriptionSelector,
+        profileAvatarSelector,
         popupAddCardSelector,
         popupProfileSelector,
         popupDescription,
@@ -37,7 +38,7 @@ setPopupFlex();
 const formProfileValidator = new FormValidator(validationObject, formProfile);
 const formAddCardValidator = new FormValidator(validationObject, formAddCard);
 
-const userInfo = new UserInfo ({profileNameSelector, profileDescriptionSelector});
+const userInfo = new UserInfo ({profileNameSelector, profileDescriptionSelector, profileAvatarSelector});
 
 const popupWithFormProfile = new PopupWithForm(popupProfileSelector, (data) => {
     userInfo.setUserInfo(data);
@@ -96,6 +97,9 @@ const createCard = (element) => {
     const card = new Card(element, '#element-template', handleCardClick);
     return card.generateCard();
 }
+
+//отрисовка профиля
+userInfo.setUserInfo();
 
 // отрисовка секции с карточками
 cardsList.renderItem();
