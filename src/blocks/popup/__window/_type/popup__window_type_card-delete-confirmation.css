@@ -1,0 +1,5 @@
+.popup__window_type_card-delete-confirmation {
+    min-height: 181px;
+    display: flex;
+    flex-direction: column;
+}

@@ -24,3 +24,4 @@ export const imgLink = popupAddCard.querySelector('.popup__input_type_img-link')
 export const formProfile = popupProfile.querySelector('.popup__form');
 export const formAddCard = popupAddCard.querySelector('.popup__form');
 
+export const popupCardDeleteConfirmationSelector = '.popup_type_card-delete-confirmation';

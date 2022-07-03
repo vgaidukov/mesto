@@ -39,10 +39,10 @@
         </div>
 
     <div class="popup popup_type_profile">
-        <div class="popup__window popup__content">
+        <div class="popup__window popup__window_type_form popup__content">
             <button type="button" class="popup__close-button popup__close-button_type_profile button"></button>
             <form name="profile-info" class="popup__form" novalidate>
-                <h3 class="popup__title">Редактировать профиль</h3>
+                <h3 class="popup__title popup__title_type_form">Редактировать профиль</h3>
                 <label class="popup__field">
                     <input
                         type="text"
@@ -75,10 +75,10 @@
     </div>
 
     <div class="popup popup_type_add-card">
-        <div class="popup__window popup__content">
+        <div class="popup__window popup__window_type_form popup__content">
             <button type="button" class="popup__close-button popup__close-button_type_card button"></button>
             <form name="add-card" class="popup__form" novalidate>
-                <h3 class="popup__title">Новое место</h3>
+                <h3 class="popup__title popup__title_type_form">Новое место</h3>
                 <label class="popup__field">
                     <input
                         type="text"
@@ -114,13 +114,24 @@
         </div>
     </div>
 
+    <div class="popup popup_type_card-delete-confirmation">
+        <div class="popup__window popup__window_type_card-delete-confirmation popup__content">
+            <button type="button" class="popup__close-button popup__close-button_type_image button"></button>
+            <h3 class="popup__title popup__title_type_card-delete-confirmation">Вы уверены?</h3>
+            <button type="button" class="popup__confirm-button button">Да</button>
+        </div>
+    </div>
+
     <template id="element-template">
         <li class="element">
             <button type="button" aria-label="Удалить" class="element__delete button"></button>
             <img src="." alt="" class="element__image">
             <div class="element__label">
                 <h2 class="element__name"></h2>
-                <button type="button" aria-label="Лайк" class="element__like button"></button>
+                <div class="element__likes">
+                    <button type="button" aria-label="Лайк" class="element__like button"></button>
+                    <p class="element__like-counter">0</p>
+                </div>
             </div>
         </li>
     </template>
