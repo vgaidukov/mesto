@@ -2,6 +2,7 @@ export const cardsContainer = '.elements';
 
 export const buttonEditProfile = document.querySelector('.profile__edit-button');
 export const buttonAddCard = document.querySelector('.profile__add-button');
+export const buttonChangeAvatar = document.querySelector('.profile__change-avatar-button');
 
 export const profileNameSelector = '.profile__name';
 export const profileDescriptionSelector = '.profile__description';
@@ -21,7 +22,12 @@ export const popupAddCard = document.querySelector(popupAddCardSelector);
 export const cardName = popupAddCard.querySelector('.popup__input_type_card-name');
 export const imgLink = popupAddCard.querySelector('.popup__input_type_img-link');
 
+export const popupChangeAvatarSelector = '.popup_type_change-avatar';
+export const popupChangeAvatar = document.querySelector(popupChangeAvatarSelector);
+
 export const formProfile = popupProfile.querySelector('.popup__form');
 export const formAddCard = popupAddCard.querySelector('.popup__form');
+export const formChangeAvatar = popupChangeAvatar.querySelector('.popup__form');
 
 export const popupCardDeleteConfirmationSelector = '.popup_type_card-delete-confirmation';
+

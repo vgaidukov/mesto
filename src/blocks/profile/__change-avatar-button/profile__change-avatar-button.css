@@ -1,0 +1,17 @@
+.profile__change-avatar-button {
+    position: absolute;
+    height: 120px;
+    width: 120px;
+    border: none;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.profile__change-avatar-button:hover {
+    background: rgba(0, 0, 0, .8);
+    background-image: url('../../../images/change-avatar-button.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 26px 26px;
+    opacity: 1;
+}

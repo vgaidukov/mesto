@@ -18,7 +18,10 @@
             </header>
             <main class="main">
                 <section class="profile">
+                    <button type="button" aria-label="Изменить аватар" class="button profile__change-avatar-button">
+                    </button>
                     <img src="" alt="Аватар" class="profile__avatar">
+
                     <div class="profile__info">
                         <div class="profile__name-container">
                             <h1 class="profile__name"></h1>
@@ -38,6 +41,7 @@
             </footer>
         </div>
 
+    <!-- попап форма редактирования профиля -->
     <div class="popup popup_type_profile">
         <div class="popup__window popup__window_type_form popup__content">
             <button type="button" class="popup__close-button popup__close-button_type_profile button"></button>
@@ -74,6 +78,7 @@
         </div>
     </div>
 
+    <!-- попап форма добавления карточки -->
     <div class="popup popup_type_add-card">
         <div class="popup__window popup__window_type_form popup__content">
             <button type="button" class="popup__close-button popup__close-button_type_card button"></button>
@@ -106,6 +111,28 @@
         </div>
     </div>
 
+    <!-- попап форма обновления аватара -->
+    <div class="popup popup_type_change-avatar">
+        <div class="popup__window popup__content">
+            <button type="button" class="popup__close-button popup__close-button_type_avatar button"></button>
+            <form name="change-avatar" class="popup__form" novalidate>
+                <h3 class="popup__title popup__title_type_form">Обновить аватар</h3>
+                <label class="popup__field">
+                    <input
+                        type="url"
+                        id="img-link-input"
+                        name="img-link"
+                        class="popup__input popup__input_type_img-link"
+                        placeholder="Ссылка на картинку"
+                        required>
+                    <span class="popup__input-error img-link-input-error"></span>
+                </label>
+                <button type="submit" class="popup__submit-button button">Создать</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- попап просмотра карточки -->
     <div class="popup popup_type_image popup_dark-background">
         <div class="popup__container popup__content">
             <button type="button" class="popup__close-button popup__close-button_type_image button"></button>
@@ -114,6 +141,7 @@
         </div>
     </div>
 
+    <!-- попап подтверждение удаления карточки -->
     <div class="popup popup_type_card-delete-confirmation">
         <div class="popup__window popup__window_type_card-delete-confirmation popup__content">
             <button type="button" class="popup__close-button popup__close-button_type_image button"></button>
@@ -122,6 +150,7 @@
         </div>
     </div>
 
+    <!-- шаблон карточки -->
     <template id="element-template">
         <li class="element">
             <button type="button" aria-label="Удалить" class="element__delete button"></button>

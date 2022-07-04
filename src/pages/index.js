@@ -4,14 +4,17 @@ import { validationObject } from '../scripts/utils/validationObject.js';
 
 import { buttonAddCard,
         buttonEditProfile,
+        buttonChangeAvatar,
         cardsContainer,
         formAddCard,
         formProfile,
+        formChangeAvatar,
         profileNameSelector,
         profileDescriptionSelector,
         profileAvatarSelector,
         popupAddCardSelector,
         popupProfileSelector,
+        popupChangeAvatarSelector,
         popupCardDeleteConfirmationSelector,
         popupDescription,
         popupImageSelector,
@@ -35,6 +38,7 @@ const setPopupFlex = () => {
 
 const formProfileValidator = new FormValidator(validationObject, formProfile);
 const formAddCardValidator = new FormValidator(validationObject, formAddCard);
+const formChangeAvatarValidator = new FormValidator(validationObject, formChangeAvatar);
 
 const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-42',
@@ -68,6 +72,16 @@ const popupWithFormAddCard = new PopupWithForm(popupAddCardSelector, (data) => {
         .then(res => {
             cardsList.addItem(createCard(res));
             popupWithFormAddCard.close();
+        })
+        .catch(err => console.log(err));
+});
+
+const popupWithFormChangeAvatar = new PopupWithForm(popupChangeAvatarSelector, (data) => {
+    console.log(data)
+    api.patchNewAvatar(data)
+        .then(res => {
+            userInfo.setUserInfo(res);
+            popupWithFormChangeAvatar.close();
         })
         .catch(err => console.log(err));
 });
@@ -160,15 +174,26 @@ const createCard = (element) => {
     return card.generateCard();
 }
 
+const changeAvatar = () => {
+    formChangeAvatarValidator.clearInputErrors(formChangeAvatar);
+    formChangeAvatarValidator.setButtonInactive(formChangeAvatar);
+
+    popupWithFormChangeAvatar.open();
+
+}
+
 // установить слушатели
 popupWithFormAddCard.setEventListeners();
 popupWithFormProfile.setEventListeners();
+popupWithFormChangeAvatar.setEventListeners();
 popupWithImage.setEventListeners();
 popupCardDeleteConfirmation.setEventListeners();
 
 buttonEditProfile.addEventListener('click', editProfile);
 buttonAddCard.addEventListener('click', addCard);
+buttonChangeAvatar.addEventListener('click', changeAvatar);
 
 // запустить валидацию
 formProfileValidator.enableValidation();
 formAddCardValidator.enableValidation();
+formChangeAvatarValidator.enableValidation();
