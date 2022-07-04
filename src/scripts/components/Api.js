@@ -3,6 +3,7 @@ export default class Api {
         this._baseUrl = options.baseUrl;
         this._headers = options.headers;
     }
+
     getInitialUserInfo() {
         return fetch(`${this._baseUrl}//users/me`, {
             method: 'GET',
@@ -117,5 +118,4 @@ export default class Api {
             return Promise.reject(`Ошибка: ${res.status}`);
         });
     }
-
 }

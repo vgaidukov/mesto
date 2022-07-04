@@ -2,39 +2,46 @@ import './index.css';
 
 import { validationObject } from '../scripts/utils/validationObject.js';
 
-import { buttonAddCard,
+import {
+    // массив попапов
+        popupList,
+    // кнопки
+        buttonAddCard,
         buttonEditProfile,
         buttonChangeAvatar,
-        cardsContainer,
-        formAddCard,
-        formProfile,
-        formChangeAvatar,
+    // селекторы
+        // профайла
         profileNameSelector,
         profileDescriptionSelector,
         profileAvatarSelector,
-        popupAddCardSelector,
+        // секции с карточками
+        containerWithCardsSelector,
+        // попапов
         popupProfileSelector,
-        popupChangeAvatarSelector,
-        popupCardDeleteConfirmationSelector,
-        popupDescription,
+        popupAddCardSelector,
         popupImageSelector,
-        popupList,
-        popupName
+        popupCardDeleteConfirmationSelector,
+        popupChangeAvatarSelector,
+    // элементы попапа редактирования профайла
+        popupName,
+        popupDescription,
+    // формы
+        formAddCard,
+        formProfile,
+        formChangeAvatar,
+
     } from '../scripts/utils/constants.js'
 
+import Api from '../scripts/components/Api.js';
+import UserInfo from '../scripts/components/UserInfo.js';
 import Section from '../scripts/components/Section.js';
 import Card from '../scripts/components/Card.js';
-import PopupWithImage from '../scripts/components/PopupWithImage.js';
-import PopupWithForm from '../scripts/components/PopupWithForm.js';
-import PopupCardDeleteConfirmation from '../scripts/components/PopupCardDeleteConfirmation.js';
-import UserInfo from '../scripts/components/UserInfo.js';
 import FormValidator from '../scripts/components/FormValidator.js';
-import Api from '../scripts/components/Api.js';
+import PopupWithForm from '../scripts/components/PopupWithForm.js';
+import PopupWithImage from '../scripts/components/PopupWithImage.js';
+import PopupCardDeleteConfirmation from '../scripts/components/PopupCardDeleteConfirmation.js';
 
-// установить значение display: flex для попапов
-const setPopupFlex = () => {
-    popupList.forEach((el) => el.classList.add('popup_flex'));
-}
+// СОЗДАНИЕ КЛАССОВ
 
 const formProfileValidator = new FormValidator(validationObject, formProfile);
 const formAddCardValidator = new FormValidator(validationObject, formAddCard);
@@ -50,38 +57,54 @@ const api = new Api({
 
 const userInfo = new UserInfo ({profileNameSelector, profileDescriptionSelector, profileAvatarSelector});
 
+// создать карточку
+const createCard = (element) => {
+    const card = new Card(element, '#element-template', { handleCardClick, handleDeleteButtonClick, handleLikeButtonClick });
+    return card.generateCard();
+}
+
 const cardsList = new Section( {
     renderer: (item) => {
         cardsList.addItem(createCard(item));
         }
     },
-    cardsContainer
+    containerWithCardsSelector
 );
 
-const popupWithFormProfile = new PopupWithForm(popupProfileSelector, (data) => {
+// установить текст кнопки сабмита
+const setSubmitButtonText = (button, text) => {
+    button.textContent = text;
+}
+
+const popupWithFormProfile = new PopupWithForm(popupProfileSelector, (data, button) => {
+    setSubmitButtonText(button, 'Сохранение...');
     api.patchUserInfo(data)
         .then(res => {
             userInfo.setUserInfo(res);
             popupWithFormProfile.close();
+            setTimeout(setSubmitButtonText, 300, button, 'Сохоранить');
         })
         .catch(err => console.log(err));
 });
 
-const popupWithFormAddCard = new PopupWithForm(popupAddCardSelector, (data) => {
+const popupWithFormAddCard = new PopupWithForm(popupAddCardSelector, (data, button) => {
+    setSubmitButtonText(button, 'Создание...');
     api.postNewCard(data)
         .then(res => {
             cardsList.addItem(createCard(res));
             popupWithFormAddCard.close();
+            setTimeout(setSubmitButtonText, 300, button, 'Создать');
         })
         .catch(err => console.log(err));
 });
 
-const popupWithFormChangeAvatar = new PopupWithForm(popupChangeAvatarSelector, (data) => {
-    console.log(data)
+const popupWithFormChangeAvatar = new PopupWithForm(popupChangeAvatarSelector, (data, button) => {
+    setSubmitButtonText(button, 'Сохранение...');
     api.patchNewAvatar(data)
         .then(res => {
             userInfo.setUserInfo(res);
             popupWithFormChangeAvatar.close();
+            setTimeout(setSubmitButtonText, 300, button, 'Сохранить');
         })
         .catch(err => console.log(err));
 });
@@ -98,11 +121,12 @@ const popupCardDeleteConfirmation = new PopupCardDeleteConfirmation(popupCardDel
         .catch(err => console.log(err));
 });
 
-//отрисовка профиля
+// ОТРИСОВКА ЭЛЕМЕНТОВ
+
+// отрисовка профиля
 api.getInitialUserInfo()
     .then(res => {
-        userInfo.setUserInfo(res);
-        setPopupFlex();
+        userInfo.setUserInfo(res)
     })
     .catch(err => console.log(err));
 
@@ -113,9 +137,25 @@ api.getInitialCards()
     })
     .catch(err => console.log(err));
 
+// установить значение display: flex для попапов
+const addClassFlex = (elements) => {
+    elements.forEach(el => el.classList.add('flex'));
+}
+
+setTimeout(addClassFlex, 1000, popupList);
+
+// ОБРАБОТЧИКИ КЛИКОВ
+
+// обработчик клика на кнопку изменения аватара
+const changeAvatar = () => {
+    formChangeAvatarValidator.clearInputErrors(formChangeAvatar);
+    formChangeAvatarValidator.setButtonInactive(formChangeAvatar);
+
+    popupWithFormChangeAvatar.open();
+}
+// обработчик клика редактирования профиля
 const editProfile = () => {
     formProfileValidator.clearInputErrors(formProfile);
-
     // подставить данные пользователя в форму
     const userInfoData = userInfo.getUserInfo();
     popupName.value = userInfoData.profileName;
@@ -124,6 +164,7 @@ const editProfile = () => {
     popupWithFormProfile.open();
 }
 
+// обработчик клика добавления карточки
 const addCard = () => {
     formAddCardValidator.clearInputErrors(formAddCard);
     formAddCardValidator.setButtonInactive(formAddCard);
@@ -168,21 +209,8 @@ const handleLikeButtonClick = (element, elementId, likeCounter) => {
     }
 }
 
-// создать карточку
-const createCard = (element) => {
-    const card = new Card(element, '#element-template', { handleCardClick, handleDeleteButtonClick, handleLikeButtonClick });
-    return card.generateCard();
-}
 
-const changeAvatar = () => {
-    formChangeAvatarValidator.clearInputErrors(formChangeAvatar);
-    formChangeAvatarValidator.setButtonInactive(formChangeAvatar);
-
-    popupWithFormChangeAvatar.open();
-
-}
-
-// установить слушатели
+// СЛУШАТЕЛИ
 popupWithFormAddCard.setEventListeners();
 popupWithFormProfile.setEventListeners();
 popupWithFormChangeAvatar.setEventListeners();
@@ -193,7 +221,7 @@ buttonEditProfile.addEventListener('click', editProfile);
 buttonAddCard.addEventListener('click', addCard);
 buttonChangeAvatar.addEventListener('click', changeAvatar);
 
-// запустить валидацию
+// ВАЛИДАЦИЯ
 formProfileValidator.enableValidation();
 formAddCardValidator.enableValidation();
 formChangeAvatarValidator.enableValidation();

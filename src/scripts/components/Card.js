@@ -30,6 +30,7 @@ export default class Card {
         this._like = this._element.querySelector('.element__like');
         this._likeCounter = this._element.querySelector('.element__like-counter');
 
+        // если карточка своя, сделать кнопку Delete видимой
         if (this._ownerId === '0024cae9c84948b8f6159beb') {
             this._delete = this._element.querySelector('.element__delete');
             this._delete.classList.add('element__delete_visible');
@@ -42,18 +43,15 @@ export default class Card {
         this._name.textContent = this._elementName;
         this._likeCounter.textContent = this._elementLikeCounter;
 
+        // если свой лайк уже стоит, установить кнопку Like нажатой
         this._elementLikes.forEach(element => {
-            //console.log(10, element)
             if (element._id === '0024cae9c84948b8f6159beb') {
                 this._like.classList.add('element__like_active');
             }
         });
+
         return this._element;
     }
-
-    //_handleLikeButtonClick() {
-    //    this._like.classList.toggle('element__like_active');
-   // }
 
     _setEventListeners() {
         this._like.addEventListener('click', () => {
