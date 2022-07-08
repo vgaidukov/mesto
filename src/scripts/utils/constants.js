@@ -29,11 +29,6 @@ const popupChangeAvatar = document.querySelector(popupChangeAvatarSelector);
 export const popupName = document.querySelector('.popup__input_type_name');
 export const popupDescription = document.querySelector('.popup__input_type_description');
 
-    // добавления карточки
-// export const cardName = popupAddCard.querySelector('.popup__input_type_card-name');
-// export const imgLink = popupAddCard.querySelector('.popup__input_type_img-link');
-    // изменения аватара
-
 // формы
 export const formProfile = popupProfile.querySelector('.popup__form');
 export const formAddCard = popupAddCard.querySelector('.popup__form');

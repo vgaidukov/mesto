@@ -28,8 +28,7 @@ import {
     // формы
         formAddCard,
         formProfile,
-        formChangeAvatar,
-
+        formChangeAvatar
     } from '../scripts/utils/constants.js'
 
 import Api from '../scripts/components/Api.js';
@@ -71,51 +70,48 @@ const cardsList = new Section( {
     containerWithCardsSelector
 );
 
-// установить текст кнопки сабмита
-const setSubmitButtonText = (button, text) => {
-    button.textContent = text;
-}
-
-const popupWithFormProfile = new PopupWithForm(popupProfileSelector, (data, button) => {
-    setSubmitButtonText(button, 'Сохранение...');
+const popupWithFormProfile = new PopupWithForm(popupProfileSelector, 'Сохранить', 'Сохранение...', (data) => {
+    popupWithFormProfile.renderLoading(true, );
     api.patchUserInfo(data)
         .then(res => {
             userInfo.setUserInfo(res);
             popupWithFormProfile.close();
-            setTimeout(setSubmitButtonText, 300, button, 'Сохоранить');
+            popupWithFormProfile.renderLoading(false);
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err))
+        .finally(() => popupWithFormProfile.renderLoading(false));
 });
 
-const popupWithFormAddCard = new PopupWithForm(popupAddCardSelector, (data, button) => {
-    setSubmitButtonText(button, 'Создание...');
+const popupWithFormAddCard = new PopupWithForm(popupAddCardSelector, 'Создать', 'Создание...',(data) => {
+    popupWithFormAddCard.renderLoading(true);
     api.postNewCard(data)
         .then(res => {
+            res.currentUserId = res.owner._id;
             cardsList.addItem(createCard(res));
             popupWithFormAddCard.close();
-            setTimeout(setSubmitButtonText, 300, button, 'Создать');
+            popupWithFormAddCard.renderLoading(false);
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err))
+        .finally(() => popupWithFormAddCard.renderLoading(false));
 });
 
-const popupWithFormChangeAvatar = new PopupWithForm(popupChangeAvatarSelector, (data, button) => {
-    setSubmitButtonText(button, 'Сохранение...');
+const popupWithFormChangeAvatar = new PopupWithForm(popupChangeAvatarSelector, 'Сохранить', 'Сохранение...', (data) => {
+    popupWithFormChangeAvatar.renderLoading(true);
     api.patchNewAvatar(data)
         .then(res => {
             userInfo.setUserInfo(res);
             popupWithFormChangeAvatar.close();
-            setTimeout(setSubmitButtonText, 300, button, 'Сохранить');
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err))
+        .finally(() => popupWithFormChangeAvatar.renderLoading(false));
 });
 
 const popupWithImage = new PopupWithImage(popupImageSelector);
 
-const popupCardDeleteConfirmation = new PopupCardDeleteConfirmation(popupCardDeleteConfirmationSelector, (element, elementId) => {
-    api.deleteCard(elementId)
+const popupCardDeleteConfirmation = new PopupCardDeleteConfirmation(popupCardDeleteConfirmationSelector, (cardToDelete) => {
+    api.deleteCard(cardToDelete.getId())
         .then(() => {
-            element.remove();
-            element = null;
+            cardToDelete.removeCard();
             popupCardDeleteConfirmation.close();
         })
         .catch(err => console.log(err));
@@ -123,26 +119,26 @@ const popupCardDeleteConfirmation = new PopupCardDeleteConfirmation(popupCardDel
 
 // ОТРИСОВКА ЭЛЕМЕНТОВ
 
-// отрисовка профиля
-api.getInitialUserInfo()
-    .then(res => {
-        userInfo.setUserInfo(res)
-    })
-    .catch(err => console.log(err));
-
-// отрисовка секции с карточками
-api.getInitialCards()
-    .then(result => {
-        cardsList.renderItem(result);
-    })
-    .catch(err => console.log(err));
-
 // установить значение display: flex для попапов
 const addClassFlex = (elements) => {
     elements.forEach(el => el.classList.add('flex'));
 }
 
-setTimeout(addClassFlex, 1000, popupList);
+Promise.all([
+    api.getInitialUserInfo(),
+    api.getInitialCards()
+    ])
+    .then((values)=>{
+        const userData = values[0];
+        const cardData = values[1];
+        cardData.forEach((el) => el.currentUserId = userData._id);
+
+        userInfo.setUserInfo(userData);
+        cardsList.renderItem(cardData);
+
+        addClassFlex(popupList);
+    })
+    .catch(err => console.log(err));
 
 // ОБРАБОТЧИКИ КЛИКОВ
 
@@ -182,33 +178,26 @@ const handleCardClick = (name, link) => {
 }
 
 // обработчик клика на кнопку Delete
-const handleDeleteButtonClick = (element, elementId) => {
-    popupCardDeleteConfirmation.open(element, elementId);
-}
-
-// установить количество лайков и состояние кнопки Like
-const updateLikes = (card, counter, likeButton) => {
-    counter.textContent = card.likes.length;
-    likeButton.classList.toggle('element__like_active');
+const handleDeleteButtonClick = (card) => {
+    popupCardDeleteConfirmation.open(card);
 }
 
 // обработчик клика на кнопку Like
-const handleLikeButtonClick = (element, elementId, likeCounter) => {
-    if (element.classList.contains('element__like_active')) {
-        api.deleteLike(elementId)
-        .then(result => {
-            updateLikes(result, likeCounter, element)
+const handleLikeButtonClick = (card, likeButton) => {
+    if (likeButton.classList.contains('element__like_active')) {
+        api.deleteLike(card.getId())
+        .then((res) => {
+            card.updateLikes(res);
         })
         .catch(err => console.log(err));
     } else {
-        api.putLike(elementId)
-        .then(result => {
-            updateLikes(result, likeCounter, element)
+        api.putLike(card.getId())
+        .then((res) => {
+            card.updateLikes(res)
         })
         .catch(err => console.log(err));
     }
 }
-
 
 // СЛУШАТЕЛИ
 popupWithFormAddCard.setEventListeners();

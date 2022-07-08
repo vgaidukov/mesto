@@ -16,7 +16,5 @@ export default class UserInfo {
         this._profileName.textContent = data.name;
         this._profileDescription.textContent = data.about;
         this._profileAvatar.src = data.avatar;
-
-        this._profileAvatar.onload = () => {this._profileAvatar.style.visibility = 'visible'}
     }
 }
