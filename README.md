@@ -17,3 +17,7 @@ link: https://vgaidukov.github.io/mesto/
  - анимация
  - адаптивная верстка, медиазапросы
  - структурирование проекта по правилам Nested БЭМ 
+
+## Preview :
+
+![Preview](src/vendor/preview.png)
